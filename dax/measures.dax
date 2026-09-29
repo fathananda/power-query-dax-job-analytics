@@ -1,0 +1,37 @@
+// job_postings_fact
+Job Count =
+COUNT(job_postings_fact[job_id])
+
+// _measure
+job_count =
+COUNT(job_postings_fact[job_id])
+
+// _measure
+skill_count =
+COUNTROWS(skills_job_dim)
+
+// _measure
+total_skill =
+DISTINCTCOUNT(skills_job_dim[skill_id])
+
+// _measure
+skill_per_job =
+DIVIDE([skill_count],[job_count])
+
+// _measure
+median_yearly_salary =
+MEDIAN(job_postings_fact[salary_year_avg])
+
+// _measure
+median_hourly_salary =
+MEDIAN(job_postings_fact[salary_hour_avg])
+
+// _measure
+Job Percent =
+DIVIDE([job_count],
+    CALCULATE(
+        [job_count],
+        ALLSELECTED(skills_dim)
+        )
+)
+
